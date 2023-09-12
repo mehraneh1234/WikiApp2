@@ -1,87 +1,103 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WikiApplication
 {
-    public class Information
+    [Serializable]
+    public class Information : IComparable<Information>
     {
+        
         public Information()
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
-        private string Name
+        private string _name;
+        private string _category;
+        private string _definition;
+        private string _structure;
+       
+        public Information(string name, string category, string definition, string structure)
         {
-            get => default;
-            set
+            _name = name;
+            _category = category;
+            _definition = definition;
+            _structure = structure;
+        }
+        public int CompareTo(Information other)
+        {
+            string thisName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(this._name);
+            string otherName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(other._name);
+            return String.Compare(this._name, other._name, StringComparison.OrdinalIgnoreCase);
+        }
+
+     
+        public string GetName()
+        {
+            //throw new System.NotImplementedException();
+            return _name;
+        }
+
+        public string GetCategory()
+        {
+            //throw new System.NotImplementedException();
+            return _category;
+        /*   if (File.Exists(filePath))
             {
+                List<string> categories = new List<string>();
+                using (StreamReader reader = new StreamReader(filePath))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        categories.Add(line);
+                    }
+                }
+                return string.Join(", ", categories);
             }
-        }
-
-        private string Category
-        {
-            get => default;
-            set
+            else
             {
-            }
+                //MessageBox.Show("Categories file not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return "Categories file not found.";
+            }*/
         }
 
-        private bool Structure
+        public string GetStructure()
         {
-            get => default;
-            set
-            {
-            }
+            return _structure;
         }
 
-        private string Definition
+        public string GetDefinition()
         {
-            get => default;
-            set
-            {
-            }
+            return _definition;
         }
 
-        public void GetName()
+        public void SetName(string name)
         {
-            throw new System.NotImplementedException();
+            _name = name;
+
         }
 
-        public void GetCategory()
+        public void SetCategory(string category)
         {
-            throw new System.NotImplementedException();
+            _category = category;
+
         }
 
-        public void GetStructure()
+            public void SetStructure(string structure)
         {
-            throw new System.NotImplementedException();
+            _structure = structure;
         }
 
-        public void GetDefinition()
+        public void SetDefinition(string definition)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void SetName()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SetCategory()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SetStructure()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SetDefinition()
-        {
-            throw new System.NotImplementedException();
+            _definition = definition;
         }
     }
 }
