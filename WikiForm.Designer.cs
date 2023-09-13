@@ -54,29 +54,27 @@
             // listViewData
             // 
             this.listViewData.HideSelection = false;
-            this.listViewData.Location = new System.Drawing.Point(594, 117);
-            this.listViewData.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.listViewData.Location = new System.Drawing.Point(396, 76);
             this.listViewData.Name = "listViewData";
-            this.listViewData.Size = new System.Drawing.Size(476, 418);
+            this.listViewData.Size = new System.Drawing.Size(319, 273);
             this.listViewData.TabIndex = 54;
             this.listViewData.UseCompatibleStateImageBehavior = false;
             // 
             // StatusStripDataStr
             // 
             this.StatusStripDataStr.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.StatusStripDataStr.Location = new System.Drawing.Point(0, 593);
+            this.StatusStripDataStr.Location = new System.Drawing.Point(0, 378);
             this.StatusStripDataStr.Name = "StatusStripDataStr";
-            this.StatusStripDataStr.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
-            this.StatusStripDataStr.Size = new System.Drawing.Size(1143, 22);
+            this.StatusStripDataStr.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
+            this.StatusStripDataStr.Size = new System.Drawing.Size(762, 22);
             this.StatusStripDataStr.TabIndex = 53;
             this.StatusStripDataStr.Text = "statusStrip1";
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(916, 37);
-            this.buttonSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonSave.Location = new System.Drawing.Point(611, 24);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(156, 35);
+            this.buttonSave.Size = new System.Drawing.Size(104, 23);
             this.buttonSave.TabIndex = 52;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -84,10 +82,9 @@
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(754, 37);
-            this.buttonLoad.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonLoad.Location = new System.Drawing.Point(503, 24);
             this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(156, 35);
+            this.buttonLoad.Size = new System.Drawing.Size(104, 23);
             this.buttonLoad.TabIndex = 51;
             this.buttonLoad.Text = "Load";
             this.buttonLoad.UseVisualStyleBackColor = true;
@@ -95,58 +92,52 @@
             // 
             // buttonSearch
             // 
-            this.buttonSearch.Location = new System.Drawing.Point(594, 37);
-            this.buttonSearch.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonSearch.Location = new System.Drawing.Point(396, 24);
             this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(152, 35);
+            this.buttonSearch.Size = new System.Drawing.Size(101, 23);
             this.buttonSearch.TabIndex = 50;
             this.buttonSearch.Text = "Search";
             this.buttonSearch.UseVisualStyleBackColor = true;
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(194, 40);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtSearch.Location = new System.Drawing.Point(129, 26);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(337, 26);
+            this.txtSearch.Size = new System.Drawing.Size(226, 20);
             this.txtSearch.TabIndex = 49;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(69, 40);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(46, 26);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(68, 20);
+            this.label5.Size = new System.Drawing.Size(47, 13);
             this.label5.TabIndex = 48;
             this.label5.Text = "Search: ";
             // 
             // buttonDelete
             // 
-            this.buttonDelete.Location = new System.Drawing.Point(399, 498);
-            this.buttonDelete.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonDelete.Location = new System.Drawing.Point(266, 324);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(134, 35);
+            this.buttonDelete.Size = new System.Drawing.Size(89, 23);
             this.buttonDelete.TabIndex = 47;
             this.buttonDelete.Text = "Delete";
             this.buttonDelete.UseVisualStyleBackColor = true;
             // 
             // buttonEdit
             // 
-            this.buttonEdit.Location = new System.Drawing.Point(236, 498);
-            this.buttonEdit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonEdit.Location = new System.Drawing.Point(157, 324);
             this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Size = new System.Drawing.Size(135, 35);
+            this.buttonEdit.Size = new System.Drawing.Size(90, 23);
             this.buttonEdit.TabIndex = 46;
             this.buttonEdit.Text = "Edit";
             this.buttonEdit.UseVisualStyleBackColor = true;
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(74, 498);
-            this.buttonAdd.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonAdd.Location = new System.Drawing.Point(49, 324);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(135, 35);
+            this.buttonAdd.Size = new System.Drawing.Size(90, 23);
             this.buttonAdd.TabIndex = 45;
             this.buttonAdd.Text = "Add";
             this.buttonAdd.UseVisualStyleBackColor = true;
@@ -154,68 +145,61 @@
             // 
             // txtDefinition
             // 
-            this.txtDefinition.Location = new System.Drawing.Point(74, 346);
-            this.txtDefinition.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtDefinition.Location = new System.Drawing.Point(49, 225);
             this.txtDefinition.Multiline = true;
             this.txtDefinition.Name = "txtDefinition";
-            this.txtDefinition.Size = new System.Drawing.Size(457, 133);
+            this.txtDefinition.Size = new System.Drawing.Size(306, 88);
             this.txtDefinition.TabIndex = 44;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(69, 309);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(46, 201);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 20);
+            this.label4.Size = new System.Drawing.Size(54, 13);
             this.label4.TabIndex = 43;
             this.label4.Text = "Definition:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(69, 251);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(46, 163);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(79, 20);
+            this.label3.Size = new System.Drawing.Size(53, 13);
             this.label3.TabIndex = 41;
             this.label3.Text = "Structure:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(69, 174);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(46, 113);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 20);
+            this.label2.Size = new System.Drawing.Size(55, 13);
             this.label2.TabIndex = 39;
             this.label2.Text = "Category: ";
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(194, 115);
-            this.txtName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtName.Location = new System.Drawing.Point(129, 75);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(337, 26);
+            this.txtName.Size = new System.Drawing.Size(226, 20);
             this.txtName.TabIndex = 38;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(69, 118);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(46, 77);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 20);
+            this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 37;
             this.label1.Text = "Name:";
             // 
             // comboBoxCategory
             // 
             this.comboBoxCategory.FormattingEnabled = true;
-            this.comboBoxCategory.Location = new System.Drawing.Point(194, 174);
-            this.comboBoxCategory.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.comboBoxCategory.Location = new System.Drawing.Point(129, 113);
             this.comboBoxCategory.Name = "comboBoxCategory";
-            this.comboBoxCategory.Size = new System.Drawing.Size(337, 28);
+            this.comboBoxCategory.Size = new System.Drawing.Size(226, 21);
             this.comboBoxCategory.TabIndex = 55;
             this.comboBoxCategory.SelectedIndexChanged += new System.EventHandler(this.comboBoxCategory_SelectedIndexChanged);
             // 
@@ -223,22 +207,19 @@
             // 
             this.groupBoxStructure.Controls.Add(this.radioButtonNonLinear);
             this.groupBoxStructure.Controls.Add(this.radioButtonLinear);
-            this.groupBoxStructure.Location = new System.Drawing.Point(194, 225);
-            this.groupBoxStructure.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBoxStructure.Location = new System.Drawing.Point(129, 146);
             this.groupBoxStructure.Name = "groupBoxStructure";
-            this.groupBoxStructure.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBoxStructure.Size = new System.Drawing.Size(339, 68);
+            this.groupBoxStructure.Size = new System.Drawing.Size(226, 44);
             this.groupBoxStructure.TabIndex = 56;
             this.groupBoxStructure.TabStop = false;
-            this.groupBoxStructure.Enter += new System.EventHandler(this.groupBoxStructure_Enter);
+           
             // 
             // radioButtonNonLinear
             // 
             this.radioButtonNonLinear.AutoSize = true;
-            this.radioButtonNonLinear.Location = new System.Drawing.Point(196, 23);
-            this.radioButtonNonLinear.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.radioButtonNonLinear.Location = new System.Drawing.Point(131, 15);
             this.radioButtonNonLinear.Name = "radioButtonNonLinear";
-            this.radioButtonNonLinear.Size = new System.Drawing.Size(112, 24);
+            this.radioButtonNonLinear.Size = new System.Drawing.Size(77, 17);
             this.radioButtonNonLinear.TabIndex = 1;
             this.radioButtonNonLinear.TabStop = true;
             this.radioButtonNonLinear.Text = "Non-Linear";
@@ -247,10 +228,9 @@
             // radioButtonLinear
             // 
             this.radioButtonLinear.AutoSize = true;
-            this.radioButtonLinear.Location = new System.Drawing.Point(33, 23);
-            this.radioButtonLinear.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.radioButtonLinear.Location = new System.Drawing.Point(22, 15);
             this.radioButtonLinear.Name = "radioButtonLinear";
-            this.radioButtonLinear.Size = new System.Drawing.Size(78, 24);
+            this.radioButtonLinear.Size = new System.Drawing.Size(54, 17);
             this.radioButtonLinear.TabIndex = 0;
             this.radioButtonLinear.TabStop = true;
             this.radioButtonLinear.Text = "Linear";
@@ -258,9 +238,9 @@
             // 
             // WikiForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1143, 615);
+            this.ClientSize = new System.Drawing.Size(762, 400);
             this.Controls.Add(this.groupBoxStructure);
             this.Controls.Add(this.comboBoxCategory);
             this.Controls.Add(this.listViewData);
@@ -279,9 +259,9 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "WikiForm";
             this.Text = "Wiki Application";
+            this.Load += new System.EventHandler(this.WikiForm_Load);
             this.groupBoxStructure.ResumeLayout(false);
             this.groupBoxStructure.PerformLayout();
             this.ResumeLayout(false);

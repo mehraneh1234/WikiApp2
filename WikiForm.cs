@@ -15,27 +15,15 @@ namespace WikiApplication
 {
     public partial class WikiForm : Form
     {
-        Information informationInstance = new Information();
+       
         List<Information> information = new List<Information>();
-        private TextBox[] textBoxValues;
-        private string selectedStructure = "Linear"; // Default value
-        string filePath = "categories.dat";
-        string[] categories = new string[]
-        {
-            "Array",
-            "List",
-            "Tree",
-            "Graphs",
-            "Abstract",
-            "Hash"
-        };
-
+        
+       // private string selectedStructure = "Linear"; // Default value
+        
         public WikiForm()
         {
             InitializeComponent();
-            //SaveCategories(filePath, categories);
-            ReadCategories(filePath);
-            InitializeListView();
+            
         }
 
         private void InitializeListView()
@@ -68,16 +56,18 @@ namespace WikiApplication
 
         private void ClearTextBox()
         {
-            foreach (TextBox textBox in textBoxValues)
-            {
-                textBox.Clear();
-            }
+            txtName.Clear();
+            txtDefinition.Clear();
+            radioButtonLinear.Checked = false;
+            radioButtonNonLinear.Checked = false;
+            comboBoxCategory.Text = "";
             txtName.Focus();
         }
         #region Category read, save, selected index change
         private List<string> ReadCategories(string filePath)
         {
             List<string> categories = new List<string>();
+
             try
             {
                 if (File.Exists(filePath))
@@ -117,7 +107,7 @@ namespace WikiApplication
         private void comboBoxCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-            // Information.SetCategory(comboBoxCategory, "categories.txt");
+            
             if (listViewData.SelectedItems.Count > 0)
             {
                 Information selectedInformation = GetSelectedInformation();
@@ -142,8 +132,9 @@ namespace WikiApplication
         private void buttonAdd_Click(object sender, EventArgs e)
         {        
             string name = txtName.Text.Trim();
-            string category = comboBoxCategory.SelectedItem as string;
-            string structure = selectedStructure;
+            //string category = comboBoxCategory.SelectedItem as string;
+            string category = comboBoxCategory.Text.Trim();
+            string structure = GetRadioButton();
             string definition = txtDefinition.Text.Trim();
 
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(category) || 
@@ -158,7 +149,12 @@ namespace WikiApplication
                 StatusStripDataStr.Items.Add("Duplicate Name. Please enter a unique name.");
             }
 
-            Information newInformation = new Information(name, category, definition, structure);
+            
+            Information newInformation = new Information();
+            newInformation.SetName(name);
+            newInformation.SetCategory(category);
+            newInformation.SetDefinition(definition);
+            newInformation.SetStructure(structure);
             information.Add(newInformation);
 
           /*  informationInstance.SetName(name);
@@ -167,10 +163,8 @@ namespace WikiApplication
             informationInstance.SetStructure(structure);
             AddData(informationInstance);*/
 
-            //ClearTextBox();
-            txtName.Clear();
-            txtDefinition.Clear();
-            selectedStructure = "Linear";
+            ClearTextBox();
+            
             DisplayListViewData();
 
         }
@@ -189,17 +183,25 @@ namespace WikiApplication
         }*/
         #endregion
         #region group box radio button for structure
-        private void groupBoxStructure_Enter(object sender, EventArgs e)
+
+        private string GetRadioButton()
         {
+            string radioText = "";
             if (radioButtonLinear.Checked)
-            {
-                selectedStructure = "Linear";
-            }
+                radioText = radioButtonLinear.Text;
             else if (radioButtonNonLinear.Checked)
-            {
-                selectedStructure = "Non-Linear";
-            }
+                radioText = radioButtonNonLinear.Text;
+            return radioText;
         }
+
+        private void SetRadioButton(int item)
+        {
+            if (information[item].GetStructure() == "Linear")
+                radioButtonLinear.Checked = true;
+            else if (information[item].GetStructure() == "Non-Linear")
+                radioButtonNonLinear.Checked = true;
+        }
+   
         #endregion
         #region Load
         private void buttonLoad_Click(object sender, EventArgs e)
@@ -207,32 +209,32 @@ namespace WikiApplication
             StatusStripDataStr.Items.Clear();
             listViewData.Items.Clear();
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Binary Files|*.dat|All Files|*.*";
-            openFileDialog.FileName = "definitions.dat";
+            openFileDialog.Filter = "Binary Files|*.bin|All Files|*.*";
+            openFileDialog.FileName = "definitions.bin";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileName = openFileDialog.FileName;
                 try
                 {
-                    using (FileStream fileStream = new FileStream(fileName, FileMode.Open))
-                    using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                    information.Clear();
+                    using (Stream stream = File.Open(fileName, FileMode.Open))
                     {
-                        int loadedRowCount = binaryReader.ReadInt32();
-                        information.Clear();
-                        for (int i =0; i < loadedRowCount; i++)
+                        using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
                         {
-                            Information newInfo = new Information();
-                            newInfo.SetName(binaryReader.ReadString());
-                            newInfo.SetCategory(binaryReader.ReadString());
-                            newInfo.SetStructure(binaryReader.ReadString());
-                            newInfo.SetDefinition(binaryReader.ReadString());
+                            while (stream.Position < stream.Length)
+                            {
+                                Information newInfo = new Information();
+                                newInfo.SetName(reader.ReadString());
+                                newInfo.SetCategory(reader.ReadString());
+                                newInfo.SetStructure(reader.ReadString());
+                                newInfo.SetDefinition(reader.ReadString());
 
-                            information.Add(newInfo);
+                                information.Add(newInfo);  
+                            }
                         }
-                        DisplayListViewData();
-                        StatusStripDataStr.Items.Add("Data loaded successfully.");
-                        //buttonSave.Enabled = true;
                     }
+                    DisplayListViewData();
+                    StatusStripDataStr.Items.Add("Data loaded successfully.");
                 }
                 catch (Exception ex)
                 {
@@ -247,18 +249,29 @@ namespace WikiApplication
         {
             StatusStripDataStr.Items.Clear();
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Binary Files|*.dat|All Files|*.*";
-            saveFileDialog.FileName = "definitions.dat";
+            saveFileDialog.Filter = "Binary Files|*.bin|All Files|*.*";
+            saveFileDialog.FileName = "definitions.bin";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filename = saveFileDialog.FileName;
                 try
                 {
                     using (FileStream filestream = new FileStream(filename, FileMode.Create))
+                    
                     {
-                        BinaryFormatter binaryFormatter = new BinaryFormatter();
-                        binaryFormatter.Serialize(filestream, information);
-                        StatusStripDataStr.Items.Add("Data saved successfully.");
+                        using (var writer = new BinaryWriter(filestream, Encoding.UTF8, false))
+                        {
+                           
+                            foreach (var info in information)
+                            {
+                                writer.Write(info.GetName());
+                                writer.Write(info.GetCategory());
+                                writer.Write(info.GetStructure());
+                                writer.Write(info.GetDefinition());
+                            }
+                        }
+                    
+                            StatusStripDataStr.Items.Add("Data saved successfully.");
                     }
                 }
                 catch (Exception ex)
@@ -266,6 +279,24 @@ namespace WikiApplication
                     StatusStripDataStr.Items.Add("Error saving data: " + ex.Message);
                 }
             }
+        }
+
+        private void WikiForm_Load(object sender, EventArgs e)
+        {
+            string filePath = "categories.dat";
+            string[] categories = new string[]
+            {
+                "",
+            "Array",
+            "List",
+            "Tree",
+            "Graphs",
+            "Abstract",
+            "Hash"
+            };
+            //SaveCategories(filePath, categories);
+            ReadCategories(filePath);
+            InitializeListView();
         }
     }
 }
