@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace WikiApplication
@@ -17,8 +19,6 @@ namespace WikiApplication
     {
        
         List<Information> information = new List<Information>();
-        
-       // private string selectedStructure = "Linear"; // Default value
         
         public WikiForm()
         {
@@ -33,6 +33,12 @@ namespace WikiApplication
             listViewData.Columns.Add("Category");
         }
 
+        private void WikiForm_Load(object sender, EventArgs e)
+        {
+            string filePath = "categories.dat";
+            ReadCategories(filePath);
+            InitializeListView();
+        }
         private void DisplayListViewData()
         {
             listViewData.Items.Clear();
@@ -54,6 +60,7 @@ namespace WikiApplication
             }
         }
 
+
         private void ClearTextBox()
         {
             txtName.Clear();
@@ -64,19 +71,13 @@ namespace WikiApplication
             txtName.Focus();
         }
         #region Category read, save, selected index change
-        private List<string> ReadCategories(string filePath)
+        private void ReadCategories(string filePath)
         {
-            List<string> categories = new List<string>();
-
             try
             {
                 if (File.Exists(filePath))
                 {
-                    string[] lines = File.ReadAllLines(filePath);
-                    categories.AddRange(lines);
-                    comboBoxCategory.DataSource = categories;
-                   // comboBoxCategory.DisplayMember = "CategoryName";
-                    comboBoxCategory.Refresh();
+                    comboBoxCategory.Items.AddRange(System.IO.File.ReadAllLines(filePath));
                 }
                 else
                 {
@@ -87,34 +88,17 @@ namespace WikiApplication
             {
                 MessageBox.Show($"Error reading categories: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return categories;
-        }
-       
-        private void SaveCategories(string filePath, string[] categories)
-        {
-            try
-            {
-                File.WriteAllLines(filePath, categories);
-                StatusStripDataStr.Items.Add("Categories saved successfully.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error saving categories: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
       
 
-        private void comboBoxCategory_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-            
+   /*     private void comboBoxCategory_SelectedIndexChanged(object sender, EventArgs e)
+        { 
             if (listViewData.SelectedItems.Count > 0)
             {
                 Information selectedInformation = GetSelectedInformation();
                 selectedInformation.SetCategory(comboBoxCategory.SelectedItem.ToString());
                 DisplayListViewData();
-            }
-           
+            } 
         }
 
         private Information GetSelectedInformation()
@@ -126,13 +110,34 @@ namespace WikiApplication
                 return information.FirstOrDefault(ds => ds.GetName() == selectedName);
             }
             return null;
+        }*/
+        #endregion
+        #region radio buttons for structure
+
+        private string GetRadioButton()
+        {
+            string radioText = "";
+            if (radioButtonLinear.Checked)
+                radioText = radioButtonLinear.Text;
+            else if (radioButtonNonLinear.Checked)
+                radioText = radioButtonNonLinear.Text;
+            return radioText;
         }
+
+        private void SetRadioButton(int index)
+        {
+            if (information[index].GetStructure() == "Linear")
+                radioButtonLinear.Checked = true;
+            else if (information[index].GetStructure() == "Non-Linear")
+                radioButtonNonLinear.Checked = true;
+        }
+   
         #endregion
         #region Add
         private void buttonAdd_Click(object sender, EventArgs e)
-        {        
+        {
+            StatusStripDataStr.Items.Clear();
             string name = txtName.Text.Trim();
-            //string category = comboBoxCategory.SelectedItem as string;
             string category = comboBoxCategory.Text.Trim();
             string structure = GetRadioButton();
             string definition = txtDefinition.Text.Trim();
@@ -148,7 +153,6 @@ namespace WikiApplication
             {
                 StatusStripDataStr.Items.Add("Duplicate Name. Please enter a unique name.");
             }
-
             
             Information newInformation = new Information();
             newInformation.SetName(name);
@@ -157,51 +161,13 @@ namespace WikiApplication
             newInformation.SetStructure(structure);
             information.Add(newInformation);
 
-          /*  informationInstance.SetName(name);
-            informationInstance.SetCategory(category);
-            informationInstance.SetDefinition(definition);
-            informationInstance.SetStructure(structure);
-            AddData(informationInstance);*/
-
             ClearTextBox();
-            
             DisplayListViewData();
+            StatusStripDataStr.Items.Add("The new data structure is added.");
 
         }
 
-      /*  private void AddData(Information newInformation)
-        {
-            if (!information.Any(ds => ds.GetName() == newInformation.GetName()))
-            {
-                information.Add(newInformation);
-
-            }
-            else
-            {
-                StatusStripDataStr.Items.Add("Duplicate Name. Please enter a unique name.");
-            }
-        }*/
-        #endregion
-        #region group box radio button for structure
-
-        private string GetRadioButton()
-        {
-            string radioText = "";
-            if (radioButtonLinear.Checked)
-                radioText = radioButtonLinear.Text;
-            else if (radioButtonNonLinear.Checked)
-                radioText = radioButtonNonLinear.Text;
-            return radioText;
-        }
-
-        private void SetRadioButton(int item)
-        {
-            if (information[item].GetStructure() == "Linear")
-                radioButtonLinear.Checked = true;
-            else if (information[item].GetStructure() == "Non-Linear")
-                radioButtonNonLinear.Checked = true;
-        }
-   
+     
         #endregion
         #region Load
         private void buttonLoad_Click(object sender, EventArgs e)
@@ -244,7 +210,7 @@ namespace WikiApplication
         }
 
         #endregion
-
+        #region Save button and close form to save
         private void buttonSave_Click(object sender, EventArgs e)
         {
             StatusStripDataStr.Items.Clear();
@@ -281,22 +247,163 @@ namespace WikiApplication
             }
         }
 
-        private void WikiForm_Load(object sender, EventArgs e)
+        private void WikiForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            string filePath = "categories.dat";
-            string[] categories = new string[]
+            buttonSave_Click(this, e);
+        }
+
+        #endregion
+        #region Edit
+
+        private void buttonEdit_Click(object sender, EventArgs e)
+        {
+            StatusStripDataStr.Items.Clear();
+            Information newInfo = new Information();
+            if (listViewData.SelectedItems.Count > 0)
             {
-                "",
-            "Array",
-            "List",
-            "Tree",
-            "Graphs",
-            "Abstract",
-            "Hash"
-            };
-            //SaveCategories(filePath, categories);
-            ReadCategories(filePath);
-            InitializeListView();
+                int selectedRowIndex = listViewData.SelectedIndices[0];
+                string name = txtName.Text.Trim();
+                string category = comboBoxCategory.Text.Trim();
+                string structure = GetRadioButton();
+                string definition = txtDefinition.Text.Trim();
+
+                if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(category) &&
+                    !string.IsNullOrEmpty(structure) && !string.IsNullOrEmpty(definition))
+                {
+                    information[selectedRowIndex].SetName(name);
+                    information[selectedRowIndex].SetCategory(category);
+                    information[selectedRowIndex].SetStructure(structure);
+                    information[selectedRowIndex].SetDefinition(definition);
+                }
+            }
+            else
+            {
+                StatusStripDataStr.Items.Add("Please select a row to edit.");
+            }
+            StatusStripDataStr.Items.Add("The selected row is edited.");
+            ClearTextBox();
+            DisplayListViewData();
+        }
+        #endregion
+        #region Delete and double click on text box name and list view
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            StatusStripDataStr.Items.Clear();
+            if (listViewData.SelectedItems.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("Are you sure to delete this data?", "Confirmation",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    int selectedIndex = listViewData.SelectedItems[0].Index;
+                    information.RemoveAt(selectedIndex);
+                    DisplayListViewData();
+                }
+            }
+            else
+            {
+                StatusStripDataStr.Items.Add("Please select a row to delete.");
+            }
+        }
+
+        private void txtName_DoubleClick(object sender, EventArgs e)
+        {
+            ClearTextBox();
+            txtName.Focus();
+        }
+
+        private void listViewData_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (listViewData.SelectedItems.Count > 0)
+            {
+                buttonDelete_Click(this, e);
+            }
+        }
+
+        #endregion
+        #region Search
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            ClearTextBox();
+            listViewData.SelectedItems.Clear();
+            StatusStripDataStr.Items.Clear();
+            if (!String.IsNullOrEmpty(txtSearch.Text))
+            {
+                information.Sort();
+                Information result = information.FirstOrDefault(ds => 
+                    ds.GetName().Equals(txtSearch.Text, StringComparison.OrdinalIgnoreCase));
+                if (result != null)
+                {
+                    int index = information.FindIndex(ds => 
+                        ds.GetName().Equals(txtSearch.Text, StringComparison.OrdinalIgnoreCase));
+                    if (index != -1)
+                    {
+                        SetRadioButton(index);
+                        txtName.Text = result.GetName();
+                        comboBoxCategory.Text = result.GetCategory();
+                        txtDefinition.Text = result.GetDefinition();
+                        foreach (ListViewItem item in listViewData.Items)
+                        {
+                            if (item.Text == result.GetName())
+                            {
+                                item.Selected = true;
+                                break;
+                            }
+                        }
+                        StatusStripDataStr.Items.Add("Target found.");
+                        txtSearch.Clear();
+                        txtSearch.Focus();
+                    }
+
+                    else
+                    {
+                        StatusStripDataStr.Items.Add("Please write the correct target!");
+                    }
+
+                    
+                }
+                else
+                {
+                    StatusStripDataStr.Items.Add("Target not found.");
+                }
+
+            }
+            else
+            {
+                StatusStripDataStr.Items.Add("Please write the target to search.");
+            }
+            
+
+        }
+        #endregion
+        #region Capitalize initial name and double click on txtName to clear all
+        private void txtName_Leave(object sender, EventArgs e)
+        {
+            txtName.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(txtName.Text);
+        }
+
+        private void txtName_DoubleClick_1(object sender, EventArgs e)
+        {
+            ClearTextBox();
+            txtName.Focus();
+        }
+
+
+        #endregion
+
+        private void listViewData_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            StatusStripDataStr.Items.Clear();
+           
+            if (listViewData.SelectedItems.Count > 0)
+            {
+                int index = listViewData.SelectedIndices[0];
+                txtName.Text = information[index].GetName();
+                comboBoxCategory.Text = information[index].GetCategory();
+                SetRadioButton(index);
+                
+                txtDefinition.Text = information[index].GetDefinition();
+            }
         }
     }
 }
